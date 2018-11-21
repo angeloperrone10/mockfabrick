@@ -1,0 +1,22 @@
+{
+  "name": "mockfabrick",
+  "version": "1.0.0",
+  "description": "The project tests the Platfr.io api.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angeloperrone10/mockfabrick.git"
+  },
+  "author": "Angelo Perrone",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/angeloperrone10/mockfabrick/issues"
+  },
+  "homepage": "https://github.com/angeloperrone10/mockfabrick#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
