@@ -28,7 +28,7 @@ Now you're set up.
 ```bash
 npm run balance -- --accountId <xxx>
 ```
-- Make an order given an accountId:
+- Make an order given an accountId, a receiverName, a description, an amount and a feeType:
 ```bash
 npm run order -- --accountId <xxx>  --receiverName <xxx> --description <xxx> --amount <xxx> --currency <xxx> --feeType <xxx>
 ```
