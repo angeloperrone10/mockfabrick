@@ -1,7 +1,6 @@
 'use strict';
 const config = require('../config');
 var express = require('express');
-var app = express();
 var self;
 var Request = require("request");
 var moment = require('moment');
@@ -25,28 +24,34 @@ class Account {
     }
 
     getBalanceForServer(req, res) {
+        var accountId = req.params.account ? req.params.account : undefined;
 
-        const options = {
-            url: 'https://api.platfr.io/api/gbs/banking/v2/accounts/14537780/balance',
-            headers: {
-                'Content-Type': 'application/json',
-                'Auth-Schema': 'S2S'
+        if (accountId){
+
+            const options = {
+                url: 'https://api.platfr.io/api/gbs/banking/v2/accounts/14537780/balance',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Auth-Schema': 'S2S'
+                }
+            };
+
+
+            function callback(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    const out = JSON.parse(body);
+                    logger.info("Get balance");
+                    res.status(200).send(out.payload[0].balance);
+                } else {
+                    logger.error("Impossible to get actual balance: " + error);
+                    res.status(response.statusCode).send(error);
+                }
             }
-        };
 
-
-        function callback(error, response, body) {
-            if (!error && response.statusCode == 200) {
-                const out = JSON.parse(body);
-                logger.info("Get balance");
-                res.status(200).send(out.payload[0].balance);
-            } else {
-                logger.error("Impossible to get actual balance: " + error);
-                res.status(response.statusCode).send(error);
-            }
+            Request(options, callback);
+        } else {
+            res.status(400).send("Please provide a valid accountId");
         }
-
-        Request(options, callback);
     };
 
     getBalance(accountId) {
@@ -81,13 +86,21 @@ class Account {
     };
 
     createOrderForServer(req, res) {
+        
+        var accountId = req.params.account ? req.params.account : undefined;
 
-        var accountId = 14537780;
-        var form = { receiverName: 'Mario Rossi', description: 'Test order', amount: "100.00", currency: 'EUR', executionDate: moment.utc().format('DD-MM-YYYY'), feeType: "SHA" };
-        var form_data = JSON.stringify(form);
+        var receiverName = req.body.receiverName ? req.body.receiverName : undefined;
+        var description = req.body.description ? req.body.description : undefined;
+        var amount = req.body.amount ? req.body.amount : undefined;
+        var currency = req.body.currency ? req.body.currency : undefined;
+        var executionDate = moment.utc().format('DD-MM-YYYY');
+        var feeType = req.body.feeType ? req.body.feeType : undefined;
 
+        if (accountId && receiverName && description && amount && currency && feeType){
+            
+            var form = { receiverName: receiverName, description: description, amount: amount, currency: currency, executionDate: executionDate, feeType: feeType };
+            var form_data = JSON.stringify(form);
 
-        if (accountId) {
             const options = {
                 method: 'POST',
                 body: form_data,
@@ -103,7 +116,7 @@ class Account {
                 if (!error && response.statusCode == 200) {
                     const info = JSON.parse(body);
                     logger.info("Order created");
-                    res.status(200).send();
+                    res.status(200).send(info.status.code);
                 } else {
                     logger.error("Order not created");
                     res.send(response.statusCode);
@@ -112,19 +125,28 @@ class Account {
 
             Request.post(options, callback);
         } else {
-            res.send(400).send();
+            res.status(400).send();
         }
     };
 
-    createOrder(accountId) {
-
+    createOrder(args) {
+        
         return new Promise(function (resolve, reject) {
 
-            var form = { receiverName: 'Mario Rossi', description: 'Test order', amount: "100.00", currency: 'EUR', executionDate: moment.utc().format('DD-MM-YYYY'), feeType: "SHA" };
+
+            var accountId = args.accountId ? args.accountId : undefined;
+            var receiverName = args.receiverName ? args.receiverName : undefined;
+            var description = args.description ? args.description : undefined;
+            var amount = args.amount ? args.amount : undefined;
+            var currency = args.currency ? args.currency : undefined;
+            var executionDate = moment.utc().format('DD-MM-YYYY');
+            var feeType = args.feeType ? args.feeType : undefined;
+
+            var form = { receiverName: receiverName, description: description, amount: amount, currency: currency, executionDate: executionDate, feeType: feeType };
             var form_data = JSON.stringify(form);
 
 
-            if (accountId) {
+            if (accountId && receiverName && description && amount && currency && feeType){
                 const options = {
                     method: 'POST',
                     body: form_data,
@@ -148,7 +170,7 @@ class Account {
 
                 Request.post(options, callback);
             } else {
-                reject("No accountId specified!");
+                reject("Input not valid");
             }
         })
     };

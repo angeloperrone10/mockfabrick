@@ -2,9 +2,9 @@
 
 function setup(router, controllers) {
 
-    router.get('/account/balance', controllers.account.getBalanceForServer);
+    router.get('/account/:account/balance/', controllers.account.getBalanceForServer);
 
-    router.get('/account/payment', controllers.account.createOrderForServer);
+    router.post('/account/:account/order', controllers.account.createOrderForServer);
 
 }
 

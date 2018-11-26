@@ -7,7 +7,7 @@ logger.level = 'debug';
 var Account = require('./controllers/Account');
 var account = new Account();
 
-var argv = require('minimist')(process.argv.slice(2));
+var argv = require('minimist')(process.argv.slice(2)); // get the given parameters
 var accountId = argv.accountId;
 
 var balance = Promise.resolve(account.getBalance(accountId));

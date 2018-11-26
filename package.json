@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start:server": "node server/index.js",
-    "balance": "node balance.js $accountId",
-    "order": "node order.js $accountId",
+    "balance": "node balance.js",
+    "order": "node order.js",
     "test": "mocha test/single_methods/dpv-clause-test.js"
   },
   "repository": {

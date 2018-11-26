@@ -23,14 +23,28 @@ npm install
 ```
 Now you're set up.
 
-# How interact with it:
+# How interact with it from command line:
 - Read the balance given an accountId:
 ```bash
-npm run balance -- --accountId 12345678
+npm run balance -- --accountId <xxx>
 ```
 - Make an order given an accountId:
 ```bash
-npm run order -- --accountId 12345678
+npm run order -- --accountId <xxx>  --receiverName <xxx> --description <xxx> --amount <xxx> --currency <xxx> --feeType <xxx>
+```
+
+# How interact with it as server:
+- Launch the server from command line:
+```bash
+npm run start:server
+```
+- Endpoint to read the balance:
+```bash
+GET http://localhost:9090/account/:<xxx>/balance
+```
+- Endpoint to create an order:
+```bash
+POST http://localhost:9090/account/:<xxx>/order , body: receiverName, description, amount, currency, feeType
 ```
 
 Tech Stack

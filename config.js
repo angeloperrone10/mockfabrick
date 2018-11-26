@@ -6,6 +6,7 @@ config.server_port = 9090;
 
 // LOGGER
 config.log4js = {
+    defaultLevel: 'TRACE',
     appenders: {
         main: {
             type: 'file',

@@ -7,10 +7,9 @@ logger.level = 'debug';
 var Account = require('./controllers/Account');
 var account = new Account();
 
-var argv = require('minimist')(process.argv.slice(2));
-var accountId = argv.accountId;
+var argv = require('minimist')(process.argv.slice(2)); // get the given parameters
 
-var order = Promise.resolve(account.createOrder(accountId));
+var order = Promise.resolve(account.createOrder(argv));
 
 order.then(function (out) {
 
