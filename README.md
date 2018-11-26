@@ -5,7 +5,7 @@ The project tests the Platfr.io api.
 
 > **fabrick-platform** The technological platform of banking and fintech services.
 Composable, robust and ready-to-use APIs to build your applications and services.
-We are working to open the fintech world. 
+We are working to open the fintech world. https://www.platfr.io/#/home
 
 ------------
 Requirements:
