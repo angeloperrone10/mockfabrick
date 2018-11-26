@@ -1,5 +1,5 @@
 'use strict';
-var config = require('./config.js');
+var config = require('../config.js');
 var app = require('./app');
 var http = require('http');
 

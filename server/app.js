@@ -4,7 +4,7 @@ var router = express.Router();
 var app = express();
 var routes = require('./routes');
 var bodyParser = require('body-parser');
-var Account = require('./controllers/Account');
+var Account = require('../controllers/Account');
 
 app.use(function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");

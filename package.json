@@ -4,7 +4,7 @@
   "description": "The project tests the Platfr.io api.",
   "main": "index.js",
   "scripts": {
-    "start:server": "node index.js",
+    "start:server": "node server/index.js",
     "balance": "node balance.js $accountId",
     "order": "node order.js $accountId",
     "test": "mocha test/single_methods/dpv-clause-test.js"
